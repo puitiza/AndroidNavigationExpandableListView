@@ -1,15 +1,11 @@
 package pe.anthony.androidnavigationexpandablelistview;
 
-import android.app.ExpandableListActivity;
 import android.content.res.Configuration;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,14 +26,15 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private String mAcitivityTitle;
-    private String[] items;
-
     private ExpandableListView expandableListView;
     private ExpandableListAdapter adapter;
-    private List<String> lstTitle;
-    private Map<String,List<String>> lstChild;
     private NavigationManager navigationManager;
+
+    private List<String> lstTitle;   //Esto es para agregar la lista del padre
+    private Map<String,List<String>> lstChild; //Esto es para agregar la lista de los hijos
+
+    private String mAcitivityTitle;
+    private String[] items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +58,13 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState == null){
             selectFirstItemAsDefault();
         }
+//      -------------------------------------Esto es para agregar la animacion del drawer con el boton de atras-------------
+        mDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
         getSupportActionBar().setTitle("EDMTDev");
+//      ------------------------------------------------------------------------------------------------------------------
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer); -> por si solo se quiere setear el boton del drawer
     }
 
     private void selectFirstItemAsDefault() {
@@ -167,12 +167,13 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-//  Estos metodos son necesarios para crear el Drawer
-    @Override
+//  Estos metodos son necesarios para crear el Drawer, he comentado la linea de abajo porque no funciona la animcion del drawer
+//    asi que le he puesto arriba
+   /* @Override
     public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
         mDrawerToggle.syncState();
-    }
+    }*/
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
