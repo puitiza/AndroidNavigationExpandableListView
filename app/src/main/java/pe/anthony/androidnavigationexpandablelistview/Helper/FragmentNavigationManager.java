@@ -31,8 +31,8 @@ public class FragmentNavigationManager implements NavigationManager {
         return mInstance;
     }
 
-    private void configure(MainActivity mainActivity){
-        mainActivity = mainActivity;
+    private void configure(MainActivity main){
+        mainActivity = main;
         mFragmentManager = mainActivity.getSupportFragmentManager();
     }
 

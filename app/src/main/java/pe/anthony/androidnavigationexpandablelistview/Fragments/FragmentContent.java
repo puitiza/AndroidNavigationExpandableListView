@@ -18,6 +18,7 @@ public class FragmentContent extends Fragment {
         // Required empty public constructor
     }
 
+    // Es como un constructor y le estas pasando como parametro un titulo para ponerlo
     public static FragmentContent newInstance(String param1) {
         FragmentContent fragment = new FragmentContent();
         Bundle args = new Bundle();

@@ -49,9 +49,12 @@ public class MainActivity extends AppCompatActivity {
         mAcitivityTitle = getTitle().toString();
         expandableListView = findViewById(R.id.navList);
         navigationManager = FragmentNavigationManager.getmInstance(this);
+
         initItems();
+//      -------------------------------- Esto es para agregar la cabecera en el drawer-------------------------------------
         View ListHearderView = getLayoutInflater().inflate(R.layout.nav_header,null,false);
         expandableListView.addHeaderView(ListHearderView);
+//       ------------------------------------------------------------------------------------------------------------------
         getData();
         addDrawerItems();
         setupDrawer();
@@ -60,19 +63,8 @@ public class MainActivity extends AppCompatActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
         getSupportActionBar().setTitle("EDMTDev");
-    }
-
-    @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     private void selectFirstItemAsDefault() {
@@ -89,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+//                Aqui era para mostrar que al momento de abrir el drawer se mostraba ese titulo
 //                getSupportActionBar().setTitle("EDMTDev");
                 invalidateOptionsMenu();
             }
@@ -96,13 +89,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+//                Recien cuando se cerraba el drawer mostraba el titulo
 //                getSupportActionBar().setTitle(mAcitivityTitle);
                 invalidateOptionsMenu();
             }
         };
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+       // mDrawerLayout.setDrawerListener(mDrawerToggle); Esto ya esta deprecado ahora es como esta en la linea de abajo
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
     private void addDrawerItems() {
@@ -111,18 +106,21 @@ public class MainActivity extends AppCompatActivity {
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
+                //Aqui esta seteando el titlo de la lista padre
                 getSupportActionBar().setTitle(lstTitle.get(groupPosition).toString());
             }
         });
         expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
             @Override
             public void onGroupCollapse(int i) {
+                //Aqui va el nombre por defecto
                 getSupportActionBar().setTitle("EDMTDev");
             }
         });
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                //Aqui es cuando se selecciona a un hijo el nombre
                String selectedItem = ((List)(lstChild.get(lstTitle.get(groupPosition)))).get(childPosition).toString();
                getSupportActionBar().setTitle(selectedItem);
 
@@ -151,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initItems() {
+        //Estos son el titulo de la lista
         items = new String[]{"Android Programing","Xamarin Programming","iOS Programing"};
     }
 
@@ -167,5 +166,17 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+//  Estos metodos son necesarios para crear el Drawer
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }

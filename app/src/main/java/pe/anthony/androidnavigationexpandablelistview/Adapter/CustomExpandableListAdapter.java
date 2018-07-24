@@ -19,6 +19,8 @@ import pe.anthony.androidnavigationexpandablelistview.R;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
+    // Como estamos mostrando un expandible un lista, esto practicante es un listView y como tal ponemos personalizar
+
     private Context context;
     private List<String> listTitle;
     private Map<String,List<String>> listItem;
@@ -64,6 +66,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    //Aqui es donde se personaliza para el padre listView -> Android Programing, Xamarin Programming
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
        String title = (String)getGroup(groupPosition);
@@ -76,6 +79,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
        return convertView;
     }
 
+    //Aqui es donde se personaliza para el hijo listView -> Beginner, Intermediate and Advanced
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         String title = (String)getChild(groupPosition,childPosition);
@@ -87,6 +91,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    //Solo es para que se vea que el hijo esta siendo seleccionado y debe estar en true para esto
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
